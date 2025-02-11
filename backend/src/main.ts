@@ -1,12 +1,9 @@
-import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  app.useGlobalPipes(new ValidationPipe());
 
   app.enableCors({
     origin: 'http://localhost:3000',
@@ -18,6 +15,7 @@ async function bootstrap() {
     .setTitle('SoftPet API')
     .setDescription('API para gerenciamento de pets')
     .setVersion('1.0')
+    .addTag('pets')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
