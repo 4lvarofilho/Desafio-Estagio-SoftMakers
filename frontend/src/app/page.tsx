@@ -1,7 +1,11 @@
 import { Header } from "@/components/Header";
+import PageNavigator from "@/components/PageNavigator";
 
 export default function Home() {
   return (
-    <Header/>
+    <div className="bg-darkl">
+      <Header/>
+      <PageNavigator/>
+    </div>
   );
 }
