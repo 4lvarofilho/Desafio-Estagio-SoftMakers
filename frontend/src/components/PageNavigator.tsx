@@ -16,7 +16,7 @@ const PageNavigator = ({ currentPage = 1, totalPages = 10 }) => {
 
   return (
     <>
-      <div className="flex absolute bottom-0 right-0 mb-20 mr-14">
+      <div className="flex absolute bottom-0 right-0 mb-20 mr-14 z-0">
         <button
           onClick={handlePrevious}
           className="p-1 cursor-default"

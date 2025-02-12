@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 
 export function Header() {
   return (
-    <div className="pt-12 px-14 font-[family-name:var(--font-ubuntu)]">
+    <div className="pt-12 font-[family-name:var(--font-ubuntu)] mb-12">
       <div className="flex items-center gap-3 pb-12">
         <Image
           src={'/softpet.svg'}
@@ -14,7 +14,7 @@ export function Header() {
         />
         <h1 className="text-3xl font-medium text-white">SoftPet</h1>
       </div>
-      <div className="flex flex-row gap-6 w-full">
+      <div className="flex flex-row gap-6 w-full pr-14">
         <div className="flex flex-row max-h-12 h-12 border-4 border-grey rounded-xl w-full">
           <Search className="bg-grey p-2 h-full w-14 text-dark" />
           <input type="text" className="bg-transparent w-full m-2 outline-none focus:text-white transition-all"/>
