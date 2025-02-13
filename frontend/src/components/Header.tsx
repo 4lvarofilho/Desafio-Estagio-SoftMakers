@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Search, CirclePlus } from "lucide-react";
 import { Button } from "@mui/material";
 
-export function Header() {
+export function Header({openCreatePetModal}: {openCreatePetModal: () => void}) {
   return (
     <div className="pt-12 font-[family-name:var(--font-ubuntu)] mb-12">
       <div className="flex items-center gap-3 pb-12">
@@ -23,7 +23,7 @@ export function Header() {
           </Button>
           <div className="w-1 bg-transparent text-transparent cursor-default">.</div> {/*Isso aqui é a pura gambiarra, corrigir depois*/}
         </div>
-        <Button className="bg-gradient-to-r from-lightblue to-blue w-40 h-12 rounded-xl flex gap-2 hover:bg-gradient-to-r hover:from-sky-500 hover:to-sky-700 transition-all" >
+        <Button className="bg-gradient-to-r from-lightblue to-blue w-40 h-12 rounded-xl flex gap-2 hover:bg-gradient-to-r hover:from-sky-500 hover:to-sky-700 transition-all" onClick={openCreatePetModal} >
           <CirclePlus className="text-white size-5" />
           <p className="font-bold text-white normal-case text-sm">Cadastrar</p>
         </Button>

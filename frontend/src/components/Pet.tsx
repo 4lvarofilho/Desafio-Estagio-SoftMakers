@@ -1,27 +1,47 @@
 'use client'
 
-import { ChevronDown, CircleUser } from "lucide-react";
+import { ChevronDown, CircleUser, SquarePen, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
 interface PetProps {
+  id: number;
   petName: string;
   ownerName: string;
-  petType: string;
+  type: string;
+  breed: string;
+  phone: string;
+  birthDate: string;
 }
 
-export function Pet({ petName, ownerName, petType }: PetProps) {
+export function Pet({ petName, ownerName, type, breed, phone, birthDate }: PetProps) {
+  const [activeCard, setActiveCard] = useState(false)
   const [rotateChevron, setRotateChevron] = useState(false);
 
   const handleRotate = () => setRotateChevron(!rotateChevron);
 
   const rotate = rotateChevron ? "rotate(180deg)" : "rotate(0)"
 
-  const petIcon = petType === "cachorro" ? "/dog.svg" : "/cat.svg"
+  const petIcon = type === "cachorro" ? "/dog.svg" : "/cat.svg"
+
+  function calculatePetsAge(birthDate: string) {
+    const birth = new Date(birthDate)
+    const today = new Date()
+    const age = today.getFullYear() - birth.getFullYear()
+    return `${age} Anos (${birth.toLocaleDateString("pt-BR")})`
+  }
+
+  const handleActive = () => {
+    if (activeCard === false) {
+      setActiveCard(true)
+    } else {
+      setActiveCard(false)
+    }
+  }
 
   return (
-    <div className="max-w-72 max-h-24">
-      <div id="pet" className="w-72 h-24 bg-gradient-to-tl from-dark to-darkblue rounded-xl flex items-center hover:border-4 hover:border-lightblue hover:cursor-pointer transition-all" onClick={handleRotate}>
+    <div className="max-w-72 flex flex-col gap-3">
+      <div className={`w-72 h-24 bg-gradient-to-tl from-dark to-darkblue rounded-xl flex items-center hover:border-4 hover:border-lightblue hover:cursor-pointer transition-all ${activeCard ? "border-lightblue border-4" : "border-0"}`} onClick={() => { handleRotate(); handleActive(); }}>
         <Image
           src={petIcon}
           alt="Pet Icon"
@@ -30,7 +50,7 @@ export function Pet({ petName, ownerName, petType }: PetProps) {
           className="pl-3"
         />
         <div className="flex flex-col ml-4 justify-center gap-2">
-          <div className="flex flex-row gap-2 items-center space-y-1.5 flex-1">
+          <div className="flex flex-row gap-2 items-center">
             <Image
               src={'/petcollar.svg'}
               alt="Pet Collar"
@@ -39,13 +59,58 @@ export function Pet({ petName, ownerName, petType }: PetProps) {
             />
             <p className="text-white text-base truncate">{petName}</p>
           </div>
-          <div className="flex flex-row gap-2 items-center space-y-1.5 flex-1">
+          <div className="flex flex-row gap-2 items-center">
             <CircleUser size={16} className="text-white" />
             <p className="text-white text-base truncate">{ownerName}</p>
           </div>
         </div>
-        <ChevronDown className="text-white align-middle text-right ml-5" style={{ transform: rotate, transition: "all 0.2s linear" }}/>
+        <ChevronDown className="text-white align-middle text-right ml-5" style={{ transform: rotate, transition: "all 0.2s linear" }} />
       </div>
+      {activeCard && (
+        <div className="w-72 rounded-xl border-4 border-lightblue bg-gradient-to-tl from-dark to-darkblue shadow-lg shadow-blue">
+          <div className="flex flex-col ml-6 mt-6 gap-2">
+            <div className="flex gap-1">
+              <Image
+                src={'/gene.svg'}
+                alt="Ilustração de ícone para raça"
+                width={10}
+                height={16}
+              />
+              <p className="text-white text-base">Raça: {breed}</p>
+            </div>
+            <div className="flex gap-1 -ml-1">
+              <Image
+                src={'/phonecall.svg'}
+                alt="Ilustração de ícone para telefone"
+                width={14}
+                height={14}
+              />
+              <p className="text-white text-base">Telefone: {phone}</p>
+            </div>
+            <div className="flex gap-1 -ml-1">
+              <Image
+                src={'/calendar.svg'}
+                alt="Ilustração de ícone para telefone"
+                width={14}
+                height={14}
+              />
+              <p className="text-white text-base">Idade: {calculatePetsAge(birthDate)}</p>
+            </div>
+          </div>
+          <div className="flex justify-center">
+            <button className="bg-white hover:bg-gray-300 transition-colors mt-5 w-64 h-10 rounded-md text-lightblue flex justify-center items-center gap-1 font-bold">
+              <SquarePen width={16} height={16} />
+              Editar
+            </button>
+          </div>
+          <div className="flex justify-center mb-4">
+            <button className="bg-gradient-to-r from-lightblue to-blue hover:bg-gradient-to-r hover:from-sky-500 hover:to-sky-700 mt-5 w-64 h-10 rounded-md text-white flex justify-center items-center gap-1 font-bold">
+              <Trash2 width={16} height={16} />
+              Remover
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
