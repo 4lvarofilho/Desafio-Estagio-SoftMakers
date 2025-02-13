@@ -2,10 +2,38 @@
 
 import { ArrowLeftCircle, CircleUser, PhoneCall, PlusCircle, X } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { DateInput } from './DateInput';
+import { createPet } from '@/services/createPetService';
 
-export function CreatePetModal({ onClose }: {onClose: () => void}) {
+export function CreatePetModal({ onClose }: { onClose: () => void }) {
+  const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [selectedPet, setSelectedPet] = useState<'cachorro' | 'gato'>('cachorro');
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+
+    const formattedDate = birthDate ? birthDate.toISOString().split('T')[0] : ''
+
+    const petData = {
+      name: formData.get('petName') as string,
+      ownerName: formData.get('owner') as string,
+      phone: formData.get('phone') as string,
+      birthDate: formattedDate,
+      type: formData.get('petType') as 'cachorro' | 'gato',
+      breed: formData.get('breed') as string,
+    }
+
+    const response = await createPet(petData)
+
+    alert(response.message)
+
+    if (response.success) {
+      onClose()
+    }
+  }
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
@@ -18,7 +46,7 @@ export function CreatePetModal({ onClose }: {onClose: () => void}) {
           </button>
         </div>
         <div className="ml-14 mt-14">
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 justify-center items-center">
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
@@ -135,15 +163,7 @@ export function CreatePetModal({ onClose }: {onClose: () => void}) {
                     <span className='text-grey font-medium'> (Aproximado)</span>
                   </label>
                 </div>
-                <input
-                  type="text"
-                  name="birthDate"
-                  id="birthDate"
-                  className="h-10 bg-transparent max-w-56 rounded-md outline-none border-4 border-grey placeholder:text-grey 
-                  py-3 pl-2 focus:text-white focus:border-white transition-colors"
-                  placeholder="22/08/2020"
-                  required
-                />
+                <DateInput value={birthDate} onChange={setBirthDate} />
               </div>
             </div>
             <div className="my-14 flex justify-between">

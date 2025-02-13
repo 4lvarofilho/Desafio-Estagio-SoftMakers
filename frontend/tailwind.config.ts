@@ -8,17 +8,6 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'softpet': `
-            radial-gradient(50% 50% at 50% 50%, 
-            rgba(0, 102, 255, 0.45) 0%, 
-            rgba(0, 32, 79, 0.00) 100%);
-          ),
-            background: radial-gradient(50% 50% at 50% 50%, 
-            rgba(0, 102, 255, 0.20) 0%, 
-            rgba(0, 32, 79, 0.00) 100%);
-        `
-      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
