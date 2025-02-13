@@ -1,17 +1,19 @@
-'use client'
-
 import { CircleArrowLeft, CircleArrowRight } from "lucide-react"
-import { useState } from "react"
 
-const PageNavigator = ({ currentPage = 1, totalPages = 10 }) => {
-  const [page, setPage] = useState(currentPage);
+interface PageNavigatorProps {
+  currentPage: number;
+  totalPages: number;
+  goToPage: (newPage: number) => void;
+}
+
+const PageNavigator = ({ currentPage, totalPages, goToPage }: PageNavigatorProps) => {
 
   function handlePrevious() {
-    setPage(prev => (prev > 1 ? prev - 1 : prev));
+    if (currentPage > 1) goToPage(currentPage - 1);
   };
 
   function handleNext() {
-    setPage(prev => (prev < totalPages ? prev + 1 : prev));
+    if (currentPage < totalPages) goToPage(currentPage + 1);
   };
 
   return (
@@ -24,7 +26,7 @@ const PageNavigator = ({ currentPage = 1, totalPages = 10 }) => {
           <CircleArrowLeft size={24} className="text-white hover:text-grey cursor-pointer transition-colors" />
         </button>
         <span className="min-w-24 text-white text-center self-center">
-          {page} de {totalPages}
+          {currentPage} de {totalPages}
         </span>
         <button
           onClick={handleNext}

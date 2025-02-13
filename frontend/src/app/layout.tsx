@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${ubuntuSans.variable} antialiased overflow-hidden`}
+        className={`${ubuntuSans.variable} overflow-auto antialiased`}
       >
         {children}
       </body>
