@@ -1,32 +1,37 @@
-'use client';
-
-import { ArrowLeftCircle, CircleUser, PhoneCall, PlusCircle, X } from 'lucide-react';
+import { useState } from 'react'
+import { updatePet } from '../services/petService'
+import { DateInput } from './DateInput'
+import type { Pet } from '@/app/types'
+import { ArrowLeftCircle, CircleUser, PhoneCall, SquarePen, X } from 'lucide-react';
 import Image from 'next/image';
-import React, { useState } from 'react';
-import { DateInput } from './DateInput';
-import { createPet } from '@/services/petService';
 
-export function CreatePetModal({ onClose }: { onClose: () => void }) {
-  const [birthDate, setBirthDate] = useState<Date | null>(null);
+interface UpdatePetModalProps {
+  pet: Pet | null;
+  onClose: () => void
+}
+
+export function UpdatePetModal({ pet, onClose }: UpdatePetModalProps) {
+  const [formData, setFormData] = useState({ ...pet })
+  const [birthDate, setBirthDate] = useState<Date | null>(
+    pet?.birthDate ? new Date(pet.birthDate) : null
+  );
   const [selectedPet, setSelectedPet] = useState<'cachorro' | 'gato'>('cachorro');
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    })
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const formData = new FormData(event.currentTarget)
-
     const formattedDate = birthDate ? birthDate.toISOString().split('T')[0] : ''
 
-    const petData = {
-      name: formData.get('petName') as string,
-      ownerName: formData.get('owner') as string,
-      phone: formData.get('phone') as string,
-      birthDate: formattedDate,
-      type: formData.get('petType') as 'cachorro' | 'gato',
-      breed: formData.get('breed') as string,
-    }
+    const updatedPetData = { ...formData, birthDate: formattedDate }
 
-    const response = await createPet(petData)
+    const response = await updatePet(pet.id, updatedPetData)
 
     alert(response.message)
 
@@ -39,7 +44,7 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
       <div className="w-[620px] min-h-48 rounded-xl bg-gradient-to-tl from-dark to-darkblue border-4 border-lightblue shadow-lg shadow-blue">
         <div className="mt-14 mx-14 flex items-center justify-center">
-          <Image src={'/createicon.svg'} alt="Create Pet Icon" width={72} height={72} />
+          <Image src={'/updateicon.svg'} alt="Create Pet Icon" width={72} height={72} />
           <h1 className="text-white font-bold text-3xl ml-6">Cadastrar</h1>
           <button onClick={onClose}>
             <X className="text-white ml-60 cursor-pointer" />
@@ -59,8 +64,10 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
                   type="text"
                   name="petName"
                   id="petName"
+                  value={formData.petName}
+                  onChange={handleChange}
                   className="h-10 bg-transparent max-w-56 rounded-md outline-none border-4 border-grey placeholder:text-grey 
-                  py-3 pl-2 focus:text-white focus:border-white transition-colors"
+                  py-3 pl-2 text-white focus:text-white focus:border-white transition-colors"
                   placeholder="Nome Sobrenome"
                   required
                 />
@@ -102,7 +109,7 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
                     Gato
                   </div>
                 </div>
-                <input type="hidden" name="petType" value={selectedPet} required />
+                <input type="hidden" name="petType" value={selectedPet} onChange={handleChange} required />
               </div>
               <div className="flex flex-col gap-2 mt-3">
                 <div className="flex flex-row items-center gap-2">
@@ -115,8 +122,10 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
                   type="text"
                   name="ownerName"
                   id="ownerName"
+                  value={formData.ownerName}
+                  onChange={handleChange}
                   className="h-10 bg-transparent max-w-56 rounded-md outline-none border-4 border-grey placeholder:text-grey 
-                  py-3 pl-2 focus:text-white focus:border-white transition-colors"
+                  py-3 pl-2 text-white focus:text-white focus:border-white transition-colors"
                   placeholder="Nome Sobrenome"
                   required
                 />
@@ -132,8 +141,10 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
                   type="text"
                   name="breed"
                   id="breed"
+                  value={formData.breed}
+                  onChange={handleChange}
                   className="h-10 bg-transparent max-w-56 rounded-md outline-none border-4 border-grey placeholder:text-grey 
-                  py-3 pl-2 focus:text-white focus:border-white transition-colors"
+                  py-3 pl-2 focus:text-white focus:border-white transition-colors text-white"
                   placeholder="Raça"
                   required
                 />
@@ -149,8 +160,10 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
                   type="text"
                   name="phone"
                   id="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
                   className="h-10 bg-transparent max-w-56 rounded-md outline-none border-4 border-grey placeholder:text-grey 
-                  py-3 pl-2 focus:text-white focus:border-white transition-colors"
+                  py-3 pl-2 text-white focus:text-white focus:border-white transition-colors"
                   placeholder="(00) 00000-0000"
                   required
                 />
@@ -175,8 +188,8 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
               </div>
               <div className="flex justify-center">
                 <button type='submit' className="bg-gradient-to-r from-lightblue to-blue hover:bg-gradient-to-r hover:from-sky-500 hover:to-sky-700 w-56 h-10 rounded-md text-white flex justify-center items-center gap-1 font-bold mr-14">
-                  <PlusCircle width={16} height={16} />
-                  Cadastrar
+                  <SquarePen width={16} height={16} />
+                  Editar
                 </button>
               </div>
             </div>
@@ -184,5 +197,5 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
         </div>
       </div>
     </div>
-  );
+  )
 }

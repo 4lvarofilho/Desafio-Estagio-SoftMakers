@@ -1,20 +1,24 @@
 'use client'
 
+import type { Pet } from "@/app/types";
 import { ChevronDown, CircleUser, SquarePen, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
 interface PetProps {
-  id: number;
-  petName: string;
-  ownerName: string;
-  type: string;
-  breed: string;
-  phone: string;
-  birthDate: string;
+  pet: {
+    id: number;
+    petName: string;
+    ownerName: string;
+    type: string;
+    breed: string;
+    phone: string;
+    birthDate: string;
+  },
+  handleOpenUpdateModal: (pet: Pet) => void;
 }
 
-export function Pet({ petName, ownerName, type, breed, phone, birthDate }: PetProps) {
+export function PetCard({ pet, handleOpenUpdateModal }: PetProps) {
   const [activeCard, setActiveCard] = useState(false)
   const [rotateChevron, setRotateChevron] = useState(false);
 
@@ -22,7 +26,7 @@ export function Pet({ petName, ownerName, type, breed, phone, birthDate }: PetPr
 
   const rotate = rotateChevron ? "rotate(180deg)" : "rotate(0)"
 
-  const petIcon = type === "cachorro" ? "/dog.svg" : "/cat.svg"
+  const petIcon = pet.type === "cachorro" ? "/dog.svg" : "/cat.svg"
 
   function calculatePetsAge(birthDate: string) {
     const birth = new Date(birthDate)
@@ -57,11 +61,11 @@ export function Pet({ petName, ownerName, type, breed, phone, birthDate }: PetPr
               width={16}
               height={16}
             />
-            <p className="text-white text-base truncate">{petName}</p>
+            <p className="text-white text-base truncate">{pet.petName}</p>
           </div>
           <div className="flex flex-row gap-2 items-center">
             <CircleUser size={16} className="text-white" />
-            <p className="text-white text-base truncate">{ownerName}</p>
+            <p className="text-white text-base truncate">{pet.ownerName}</p>
           </div>
         </div>
         <ChevronDown className="text-white align-middle text-right ml-5" style={{ transform: rotate, transition: "all 0.2s linear" }} />
@@ -76,7 +80,7 @@ export function Pet({ petName, ownerName, type, breed, phone, birthDate }: PetPr
                 width={10}
                 height={16}
               />
-              <p className="text-white text-base">Raça: {breed}</p>
+              <p className="text-white text-base">Raça: {pet.breed}</p>
             </div>
             <div className="flex gap-1 -ml-1">
               <Image
@@ -85,7 +89,7 @@ export function Pet({ petName, ownerName, type, breed, phone, birthDate }: PetPr
                 width={14}
                 height={14}
               />
-              <p className="text-white text-base">Telefone: {phone}</p>
+              <p className="text-white text-base">Telefone: {pet.phone}</p>
             </div>
             <div className="flex gap-1 -ml-1">
               <Image
@@ -94,11 +98,11 @@ export function Pet({ petName, ownerName, type, breed, phone, birthDate }: PetPr
                 width={14}
                 height={14}
               />
-              <p className="text-white text-base">Idade: {calculatePetsAge(birthDate)}</p>
+              <p className="text-white text-base">Idade: {calculatePetsAge(pet.birthDate)}</p>
             </div>
           </div>
           <div className="flex justify-center">
-            <button className="bg-white hover:bg-gray-300 transition-colors mt-5 w-64 h-10 rounded-md text-lightblue flex justify-center items-center gap-1 font-bold">
+            <button onClick={() => handleOpenUpdateModal(pet)} className="bg-white hover:bg-gray-300 transition-colors mt-5 w-64 h-10 rounded-md text-lightblue flex justify-center items-center gap-1 font-bold">
               <SquarePen width={16} height={16} />
               Editar
             </button>
