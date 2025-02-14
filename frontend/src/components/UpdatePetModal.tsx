@@ -47,7 +47,7 @@ export function UpdatePetModal({ pet, onClose }: UpdatePetModalProps) {
           <Image src={'/updateicon.svg'} alt="Create Pet Icon" width={72} height={72} />
           <h1 className="text-white font-bold text-3xl ml-6">Editar</h1>
           <button onClick={onClose}>
-            <X className="text-white ml-60 cursor-pointer" />
+            <X className="text-white ml-[300px] cursor-pointer" />
           </button>
         </div>
         <div className="ml-14 mt-14">
