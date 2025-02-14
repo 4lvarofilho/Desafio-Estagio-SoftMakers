@@ -1,6 +1,8 @@
 # SoftPet
 
 Sistema de gerenciamento para petshops, permitindo o cadastro e acompanhamento de pets e seus donos.
+Nome: Álvaro Filho
+E-mail de contato: alvarofilho.dev@gmail.com
 
 ## 🚀 Como Rodar o Projeto
 
