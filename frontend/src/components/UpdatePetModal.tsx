@@ -45,7 +45,7 @@ export function UpdatePetModal({ pet, onClose }: UpdatePetModalProps) {
       <div className="w-[620px] min-h-48 rounded-xl bg-gradient-to-tl from-dark to-darkblue border-4 border-lightblue shadow-lg shadow-blue">
         <div className="mt-14 mx-14 flex items-center justify-center">
           <Image src={'/updateicon.svg'} alt="Create Pet Icon" width={72} height={72} />
-          <h1 className="text-white font-bold text-3xl ml-6">Cadastrar</h1>
+          <h1 className="text-white font-bold text-3xl ml-6">Editar</h1>
           <button onClick={onClose}>
             <X className="text-white ml-60 cursor-pointer" />
           </button>
