@@ -4,18 +4,18 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class Pet {
   @ApiProperty({
-    example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'UUID do pet'
+    example: '1',
+    description: 'ID do pet'
   })
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty({
     example: 'Simba Farias',
     description: 'Nome do pet'
   })
   @Column()
-  name: string;
+  petName: string;
 
   @ApiProperty({
     example: 'Emmanuel Farias',

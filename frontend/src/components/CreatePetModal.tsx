@@ -5,6 +5,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { DateInput } from './DateInput';
 import { createPet } from '@/services/petService';
+import {IMaskInput} from "react-imask"
 
 export function CreatePetModal({ onClose }: { onClose: () => void }) {
   const [birthDate, setBirthDate] = useState<Date | null>(null);
@@ -18,11 +19,11 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
     const formattedDate = birthDate ? birthDate.toISOString().split('T')[0] : ''
 
     const petData = {
-      name: formData.get('petName') as string,
-      ownerName: formData.get('owner') as string,
+      petName: formData.get('petName') as string,
+      ownerName: formData.get('ownerName') as string,
       phone: formData.get('phone') as string,
       birthDate: formattedDate,
-      type: formData.get('petType') as 'cachorro' | 'gato',
+      type: formData.get('petType') as string,
       breed: formData.get('breed') as string,
     }
 
@@ -60,7 +61,7 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
                   name="petName"
                   id="petName"
                   className="h-10 bg-transparent max-w-56 rounded-md outline-none border-4 border-grey placeholder:text-grey 
-                  py-3 pl-2 focus:text-white focus:border-white transition-colors"
+                  py-3 pl-2 focus:text-white focus:border-white text-white transition-colors"
                   placeholder="Nome Sobrenome"
                   required
                 />
@@ -116,7 +117,7 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
                   name="ownerName"
                   id="ownerName"
                   className="h-10 bg-transparent max-w-56 rounded-md outline-none border-4 border-grey placeholder:text-grey 
-                  py-3 pl-2 focus:text-white focus:border-white transition-colors"
+                  py-3 pl-2 focus:text-white focus:border-white text-white transition-colors"
                   placeholder="Nome Sobrenome"
                   required
                 />
@@ -133,7 +134,7 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
                   name="breed"
                   id="breed"
                   className="h-10 bg-transparent max-w-56 rounded-md outline-none border-4 border-grey placeholder:text-grey 
-                  py-3 pl-2 focus:text-white focus:border-white transition-colors"
+                  py-3 pl-2 focus:text-white focus:border-white text-white transition-colors"
                   placeholder="Raça"
                   required
                 />
@@ -145,12 +146,13 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
                     Telefone
                   </label>
                 </div>
-                <input
+                <IMaskInput
                   type="text"
                   name="phone"
                   id="phone"
+                  mask={"(00) 00000-0000"}
                   className="h-10 bg-transparent max-w-56 rounded-md outline-none border-4 border-grey placeholder:text-grey 
-                  py-3 pl-2 focus:text-white focus:border-white transition-colors"
+                  py-3 pl-2 focus:text-white focus:border-white text-white transition-colors"
                   placeholder="(00) 00000-0000"
                   required
                 />
@@ -163,7 +165,8 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
                     <span className='text-grey font-medium'> (Aproximado)</span>
                   </label>
                 </div>
-                <DateInput value={birthDate} onChange={setBirthDate} />
+                <DateInput value={birthDate} onChange={setBirthDate} styling="h-10 bg-transparent w-full rounded-md outline-none border-4 border-grey placeholder:text-grey 
+          py-3 pl-2 pr-4 focus:text-white text-white"/>
               </div>
             </div>
             <div className="my-14 flex justify-between">

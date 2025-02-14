@@ -10,9 +10,11 @@ registerLocale('pt-BR', ptBR)
 interface DateInputProps {
   value: Date | null
   onChange: (date: Date | null) => void
+  styling: string;
+  disabled?: boolean;
 }
 
-export function DateInput({ value, onChange }: DateInputProps) {
+export function DateInput({ value, onChange, styling, disabled }: DateInputProps) {
   return (
     <div className="relative w-full">
       <DatePicker
@@ -23,9 +25,9 @@ export function DateInput({ value, onChange }: DateInputProps) {
         showYearDropdown
         showMonthDropdown
         dropdownMode="select"
-        className="h-10 bg-transparent w-full rounded-md outline-none border-4 border-grey placeholder:text-grey 
-          py-3 pl-2 pr-4 focus:text-white text-white"
+        className={styling}
         placeholderText="DD/MM/AAAA"
+        disabled={disabled}
       />
     </div>
   )

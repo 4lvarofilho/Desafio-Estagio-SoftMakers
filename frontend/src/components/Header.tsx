@@ -2,7 +2,13 @@ import Image from "next/image";
 import { Search, CirclePlus } from "lucide-react";
 import { Button } from "@mui/material";
 
-export function Header({openCreatePetModal}: {openCreatePetModal: () => void}) {
+interface HeaderProps{
+  openCreatePetModal: () => void;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+}
+
+export function Header({openCreatePetModal, searchTerm, setSearchTerm}: HeaderProps) {
   return (
     <div className="pt-12 font-[family-name:var(--font-ubuntu)] mb-12">
       <div className="flex items-center gap-3 pb-12">
@@ -17,7 +23,12 @@ export function Header({openCreatePetModal}: {openCreatePetModal: () => void}) {
       <div className="flex flex-row gap-6 w-full pr-14">
         <div className="flex flex-row max-h-12 h-12 border-4 border-grey rounded-xl w-full">
           <Search className="bg-grey p-2 h-full w-14 text-dark" />
-          <input type="text" className="bg-transparent w-full m-2 outline-none focus:text-white transition-all"/>
+          <input 
+            type="text" 
+            className="bg-transparent w-full m-2 outline-none focus:text-white text-white transition-all truncate" 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
           <Button className="bg-gradient-to-l  from-grey to-grey rounded-xl h-8 self-center hover:bg-gradient-to-r hover:from-gray-700 hover:to-gray-700 transition-all" disableRipple>
             <p className="font-bold text-white text-sm normal-case py-2 pl-3 pr-2 ">Pesquisar</p>
           </Button>

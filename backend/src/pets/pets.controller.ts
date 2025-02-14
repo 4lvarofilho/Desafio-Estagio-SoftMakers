@@ -48,7 +48,7 @@ export class PetsController {
     status: 404,
     description: 'Pet não encontrado'
   })
-  findOne(@Param('id') id:string){
+  findOne(@Param('id') id:number){
     return this.petsService.findOne(id);
   }
 
@@ -64,7 +64,7 @@ export class PetsController {
     status: 404,
     description: 'Pet não encontrado'
   })
-  update(@Param('id') id:string, @Body() updatePetDto: UpdatePetDto){
+  update(@Param('id') id:number, @Body() updatePetDto: UpdatePetDto){
     return this.petsService.update(id, updatePetDto)
   }
 
@@ -79,7 +79,7 @@ export class PetsController {
     status: 404,
     description: 'Pet não encontrado'
   })
-  remove(@Param('id') id:string){
+  remove(@Param('id') id:number){
     return this.petsService.remove(id)
   }
 }

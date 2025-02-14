@@ -21,7 +21,7 @@ export class PetsService{
     return this.petsRepository.find();
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     const pet = await this.petsRepository.findOne({where: {id}});
     if (!pet) {
       throw new NotFoundException(`Pet #${id} não foi encontrado`);
@@ -29,13 +29,13 @@ export class PetsService{
     return pet;
   }
 
-  async update(id: string, updatePetDto: UpdatePetDto){
+  async update(id: number, updatePetDto: UpdatePetDto){
     const pet = await this.findOne(id);
     Object.assign(pet, updatePetDto);
     return this.petsRepository.save(pet)
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     const pet = await this.findOne(id);
     return this.petsRepository.remove(pet);
   }

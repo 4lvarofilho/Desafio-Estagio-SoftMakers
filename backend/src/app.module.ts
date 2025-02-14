@@ -8,7 +8,7 @@ import { PetsModule } from "./pets/pets.module";
       type: 'postgres',
       host: process.env.DB_HOST || 'db',
       port: 5432,
-      username: process.env.DB_USERNAME || 'postgres',
+      username: process.env.DB_USERNAME || 'softpet',
       password: process.env.DB_PASSWORD || 'password',
       database: process.env.DB_DATABASE || 'softpet',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],

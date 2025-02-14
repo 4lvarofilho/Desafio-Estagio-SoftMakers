@@ -8,7 +8,7 @@ export class CreatePetDto {
   })
   @IsNotEmpty({message: 'O nome é obrigatório'})
   @IsString()
-  name: string;
+  petName: string;
 
   @ApiProperty({
     example: 'Emmanuel Farias',

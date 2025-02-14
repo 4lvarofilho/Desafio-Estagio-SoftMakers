@@ -16,9 +16,10 @@ interface PetProps {
     birthDate: string;
   },
   handleOpenUpdateModal: (pet: Pet) => void;
+  handleOpenRemoveModal: (pet: Pet) => void;
 }
 
-export function PetCard({ pet, handleOpenUpdateModal }: PetProps) {
+export function PetCard({ pet, handleOpenUpdateModal, handleOpenRemoveModal }: PetProps) {
   const [activeCard, setActiveCard] = useState(false)
   const [rotateChevron, setRotateChevron] = useState(false);
 
@@ -44,7 +45,7 @@ export function PetCard({ pet, handleOpenUpdateModal }: PetProps) {
   }
 
   return (
-    <div className="max-w-72 flex flex-col gap-3">
+    <div className="max-w-72 flex flex-col gap-3 z-10">
       <div className={`w-72 h-24 bg-gradient-to-tl from-dark to-darkblue rounded-xl flex items-center hover:border-4 hover:border-lightblue hover:cursor-pointer transition-all ${activeCard ? "border-lightblue border-4" : "border-0"}`} onClick={() => { handleRotate(); handleActive(); }}>
         <Image
           src={petIcon}
@@ -71,7 +72,7 @@ export function PetCard({ pet, handleOpenUpdateModal }: PetProps) {
         <ChevronDown className="text-white align-middle text-right ml-5" style={{ transform: rotate, transition: "all 0.2s linear" }} />
       </div>
       {activeCard && (
-        <div className="w-72 rounded-xl border-4 border-lightblue bg-gradient-to-tl from-dark to-darkblue shadow-lg shadow-blue">
+        <div className="w-72 rounded-xl border-4 border-lightblue bg-gradient-to-tl from-dark to-darkblue shadow-lg shadow-blue z-20">
           <div className="flex flex-col ml-6 mt-6 gap-2">
             <div className="flex gap-1">
               <Image
@@ -108,7 +109,7 @@ export function PetCard({ pet, handleOpenUpdateModal }: PetProps) {
             </button>
           </div>
           <div className="flex justify-center mb-4">
-            <button className="bg-gradient-to-r from-lightblue to-blue hover:bg-gradient-to-r hover:from-sky-500 hover:to-sky-700 mt-5 w-64 h-10 rounded-md text-white flex justify-center items-center gap-1 font-bold">
+            <button onClick={() => handleOpenRemoveModal(pet)} className="bg-gradient-to-r from-lightblue to-blue hover:bg-gradient-to-r hover:from-sky-500 hover:to-sky-700 mt-5 w-64 h-10 rounded-md text-white flex justify-center items-center gap-1 font-bold">
               <Trash2 width={16} height={16} />
               Remover
             </button>

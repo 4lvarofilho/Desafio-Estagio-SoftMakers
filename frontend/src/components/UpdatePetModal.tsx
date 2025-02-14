@@ -4,6 +4,7 @@ import { DateInput } from './DateInput'
 import type { Pet } from '@/app/types'
 import { ArrowLeftCircle, CircleUser, PhoneCall, SquarePen, X } from 'lucide-react';
 import Image from 'next/image';
+import { IMaskInput } from 'react-imask';
 
 interface UpdatePetModalProps {
   pet: Pet | null;
@@ -26,6 +27,11 @@ export function UpdatePetModal({ pet, onClose }: UpdatePetModalProps) {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+
+    if (!pet) {
+      alert("Pet não encontrado.")
+      return
+    }
 
     const formattedDate = birthDate ? birthDate.toISOString().split('T')[0] : ''
 
@@ -156,12 +162,13 @@ export function UpdatePetModal({ pet, onClose }: UpdatePetModalProps) {
                     Telefone
                   </label>
                 </div>
-                <input
+                <IMaskInput
                   type="text"
                   name="phone"
                   id="phone"
                   value={formData.phone}
                   onChange={handleChange}
+                  mask={"(00) 00000-0000"}
                   className="h-10 bg-transparent max-w-56 rounded-md outline-none border-4 border-grey placeholder:text-grey 
                   py-3 pl-2 text-white focus:text-white focus:border-white transition-colors"
                   placeholder="(00) 00000-0000"
@@ -176,7 +183,8 @@ export function UpdatePetModal({ pet, onClose }: UpdatePetModalProps) {
                     <span className='text-grey font-medium'> (Aproximado)</span>
                   </label>
                 </div>
-                <DateInput value={birthDate} onChange={setBirthDate} />
+                <DateInput value={birthDate} onChange={setBirthDate} styling="h-10 bg-transparent w-full rounded-md outline-none border-4 border-grey placeholder:text-grey 
+          py-3 pl-2 pr-4 focus:text-white text-white"/>
               </div>
             </div>
             <div className="my-14 flex justify-between">
