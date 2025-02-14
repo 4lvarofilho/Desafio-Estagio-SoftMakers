@@ -9,9 +9,10 @@ import { IMaskInput } from 'react-imask';
 interface UpdatePetModalProps {
   pet: Pet | null;
   onClose: () => void
+  fetchPets: () => void
 }
 
-export function UpdatePetModal({ pet, onClose }: UpdatePetModalProps) {
+export function UpdatePetModal({ pet, onClose, fetchPets }: UpdatePetModalProps) {
   const [formData, setFormData] = useState({ ...pet })
   const [birthDate, setBirthDate] = useState<Date | null>(
     pet?.birthDate ? new Date(pet.birthDate) : null
@@ -40,7 +41,8 @@ export function UpdatePetModal({ pet, onClose }: UpdatePetModalProps) {
     const response = await updatePet(pet.id, updatedPetData)
 
     if (response.success) {
-      onClose()
+      fetchPets();
+      onClose();
     }
   }
 

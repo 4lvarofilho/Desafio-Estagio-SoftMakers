@@ -7,7 +7,12 @@ import { DateInput } from './DateInput';
 import { createPet } from '@/services/petService';
 import {IMaskInput} from "react-imask"
 
-export function CreatePetModal({ onClose }: { onClose: () => void }) {
+interface CreatePetModalProps {
+  onClose: () => void;
+  fetchPets: () => void;
+}
+
+export function CreatePetModal({onClose, fetchPets}: CreatePetModalProps) {
   const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [selectedPet, setSelectedPet] = useState<'cachorro' | 'gato'>('cachorro');
 
@@ -30,7 +35,8 @@ export function CreatePetModal({ onClose }: { onClose: () => void }) {
     const response = await createPet(petData)
 
     if (response.success) {
-      onClose()
+      fetchPets();
+      onClose();
     }
   }
 

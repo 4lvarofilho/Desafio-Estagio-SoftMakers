@@ -90,9 +90,9 @@ export default function Home() {
             <PetCard key={pet.id} pet={pet} handleOpenUpdateModal={handleEdit} handleOpenRemoveModal={handleOpenRemovePetModal} />
           ))}
         </div>
-        {isCreatePetModalOpen && <CreatePetModal onClose={handleCloseCreatePetModal} />}
-        {selectedPet && isUpdatePetModalOpen && <UpdatePetModal pet={selectedPet} onClose={handleCloseUpdatePetModal} />}
-        {selectedPet && isRemovePetModalOpen && <RemovePetModal pet={selectedPet} onClose={handleCloseRemovePetModal} onPetRemoved={handlePetRemoved} />}
+        {isCreatePetModalOpen && <CreatePetModal onClose={handleCloseCreatePetModal} fetchPets={fetchPets} />}
+        {selectedPet && isUpdatePetModalOpen && <UpdatePetModal pet={selectedPet} onClose={handleCloseUpdatePetModal} fetchPets={fetchPets} />}
+        {selectedPet && isRemovePetModalOpen && <RemovePetModal pet={selectedPet} onClose={handleCloseRemovePetModal} onPetRemoved={handlePetRemoved} fetchPets={fetchPets} />}
         <PageNavigator currentPage={currentPage} totalPages={totalPages} goToPage={goToPage} />
       </div>
     </div>

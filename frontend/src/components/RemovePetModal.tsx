@@ -11,9 +11,10 @@ interface removePetModalProps {
   pet: Pet | null;
   onClose: () => void
   onPetRemoved: (id: number) => void;
+  fetchPets: () => void;
 }
 
-export function RemovePetModal({ pet, onClose, onPetRemoved }: removePetModalProps) {
+export function RemovePetModal({ pet, onClose, onPetRemoved, fetchPets }: removePetModalProps) {
   const [formData, setFormData] = useState({ ...pet })
   const [birthDate, setBirthDate] = useState<Date | null>(
     pet?.birthDate ? new Date(pet.birthDate) : null
@@ -38,6 +39,7 @@ export function RemovePetModal({ pet, onClose, onPetRemoved }: removePetModalPro
     try {
       await removePet(pet.id);
       onPetRemoved(pet.id)
+      fetchPets();
       onClose();
     } catch (error) {
       console.error("Erro ao remover o pet", error);
