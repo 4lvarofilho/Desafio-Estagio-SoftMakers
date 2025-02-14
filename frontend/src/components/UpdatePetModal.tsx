@@ -39,15 +39,13 @@ export function UpdatePetModal({ pet, onClose }: UpdatePetModalProps) {
 
     const response = await updatePet(pet.id, updatedPetData)
 
-    alert(response.message)
-
     if (response.success) {
       onClose()
     }
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-20">
       <div className="w-[620px] min-h-48 rounded-xl bg-gradient-to-tl from-dark to-darkblue border-4 border-lightblue shadow-lg shadow-blue">
         <div className="mt-14 mx-14 flex items-center justify-center">
           <Image src={'/updateicon.svg'} alt="Create Pet Icon" width={72} height={72} />

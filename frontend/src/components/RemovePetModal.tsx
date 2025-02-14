@@ -5,6 +5,7 @@ import type { Pet } from '@/app/types'
 import { ArrowLeftCircle, CircleUser, PhoneCall, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import { IMaskInput } from 'react-imask';
+import { toast } from 'react-toastify';
 
 interface removePetModalProps {
   pet: Pet | null;
@@ -30,7 +31,7 @@ export function RemovePetModal({ pet, onClose, onPetRemoved }: removePetModalPro
     event.preventDefault()
 
     if (!pet) {
-      alert("Pet não encontrado.")
+      toast.error("⚠ Pet não encontrado.")
       return
     }
 
@@ -44,7 +45,7 @@ export function RemovePetModal({ pet, onClose, onPetRemoved }: removePetModalPro
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-20">
       <div className="w-[620px] min-h-48 rounded-xl bg-gradient-to-tl from-dark to-darkblue border-4 border-lightblue shadow-lg shadow-blue">
         <div className="mt-14 mx-14 flex items-center justify-center">
           <Image src={'/removeicon.svg'} alt="Remove Pet Icon" width={72} height={72} />

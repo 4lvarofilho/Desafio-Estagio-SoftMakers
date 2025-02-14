@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import "./globals.css";
+import { Slide, ToastContainer } from "react-toastify";
 
 const ubuntuSans = Ubuntu({
   variable: "--font-ubuntu",
@@ -26,6 +27,7 @@ export default function RootLayout({
         className={`${ubuntuSans.variable} overflow-auto antialiased`}
       >
         {children}
+        <ToastContainer position="top-right" autoClose={3000} theme="dark" transition={Slide} pauseOnHover={false} closeOnClick/>
       </body>
     </html>
   );
