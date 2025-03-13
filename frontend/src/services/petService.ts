@@ -10,7 +10,7 @@ export interface PetData {
   breed?: string
 }
 
-export const API_URL = "http://localhost:3001/api/pets"
+export const API_URL = "http://softpet-app-32b82196e129.herokuapp.com/api/pets"
 
 export async function createPet(petData: PetData) {
   try {
